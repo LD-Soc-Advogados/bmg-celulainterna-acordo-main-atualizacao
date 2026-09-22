@@ -1,0 +1,9 @@
+>>> Log desta execucao: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\logs\2026-09-18_13-06-12.log
+>>> bmg-celulainterna-acordo v32-cna-status-retomada <<<
+>>> Tarefa 4 (standalone): Consultar advogados DJEN
+>>> API:   https://comunicaapi.pje.jus.br (sem Edge / sem login)
+>>> Saida: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\saida\advogados_djen_2026-09-18_13-06.xlsx
+
+>>> Planilha: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\Planilha Envio de casos.xlsx
+
+ERRO: Planilha nao encontrada: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\Planilha Envio de casos.xlsx

@@ -1,0 +1,15 @@
+>>> Log desta execucao: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\logs\2026-09-18_15-02-44.log
+>>> bmg-celulainterna-acordo v32-cna-status-retomada <<<
+>>> Tarefa 5 (standalone): Consultar contato CNA
+>>> Site:  https://cna.oab.org.br (navegador proprio, sem o Edge dedicado)
+>>> Entrada: advogados_djen_2026-09-17_17-20Copia.xlsx  [origem: --djen-xlsx]
+>>> Saida:          advogados_djen_cna_2026-09-18_15-02.xlsx
+
+>>> 112 advogado(s) ENCONTRADO/INFERIDO pra consultar no CNA
+>>> 5 linha(s) puladas (INCERTO/NAO ENCONTRADO/ERRO/sem OAB)
+>>> 112 advogado(s) ja resolvido(s) em rodada(s) anterior(es) - reaproveitando (--forcar reconsulta tudo).
+>>> 0 advogado(s) a consultar nesta execucao
+
+>>> Nada pendente pro CNA - todo mundo ja tinha resultado definitivo em rodada(s) anterior(es).
+
+>>> Planilha DJEN+CNA: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\saida\advogados_djen_cna_2026-09-18_15-02.xlsx

@@ -1,0 +1,61 @@
+>>> Log desta execucao: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\logs\2026-09-18_14-49-09.log
+>>> bmg-celulainterna-acordo v32-cna-status-retomada <<<
+>>> Tarefa 5 (standalone): Consultar contato CNA
+>>> Site:  https://cna.oab.org.br (navegador proprio, sem o Edge dedicado)
+>>> Entrada: advogados_djen_2026-09-17_17-20_Copia.xlsx  [origem: --djen-xlsx]
+>>> Saida:          advogados_djen_cna_2026-09-18_14-49.xlsx
+
+>>> 112 advogado(s) ENCONTRADO/INFERIDO pra consultar no CNA
+>>> 5 linha(s) puladas (INCERTO/NAO ENCONTRADO/ERRO/sem OAB)
+>>> 83 advogado(s) ja resolvido(s) em rodada(s) anterior(es) - reaproveitando (--forcar reconsulta tudo).
+>>> 29 advogado(s) a consultar nesta execucao
+
+>>> CNA canal: msedge
+Z:\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\.venv\Lib\site-packages\playwright_stealth\stealth.py:216: UserWarning: Stealth has already been applied to this page or context. Skipping duplicate application.
+  warnings.warn(
+[1/29] LETICIA BATISTA COSTA          OAB/MG 206959 ... OK tel:(31) 35006060 / (31) 000000000 email:-
+[2/29] ROMULO GUILHERME FONTANA KOENI OAB/RS 95538 ... OK tel:(51) 30355256 / (51) 985265256 email:-
+[3/29] CASSIO AUGUSTO FERRARINI       OAB/RS 95421 ... OK tel:(51) 30355256 / (51) 985265256 email:-
+[4/29] HYARA GOMES ALMEIDA            OAB/CE 49061 ... OK (sem contato)
+[5/29] MAX DANIEL DUARTE WINTER       OAB/RS 82735 ... OK tel:(51) 30223182 / (51) 997144469 email:-
+[6/29] FELIPE LUIS PERIN              OAB/RS RS063176 ... FALHA: sem resultado no CNA
+[7/29] CRISTIAN CAMPAGNARO NUNES      OAB/ES 17188 ... OK tel:(27) 32582557 / (27) 981512640 email:-
+[8/29] RAFAELA FEIJO DA SILVA         OAB/RS 101601 ... OK tel:- email:-
+[9/29] SILVANE CAMILA CAMBRUZZI       OAB/RS 138534 ... OK (sem contato)
+[10/29] MARIA IZABEL FORMIGONI DALLA B OAB/ES 31936 ... OK (sem contato)
+[11/29] HELCIO PIMENTEL DE JESUS       OAB/ES 20986 ... OK (sem contato)
+[12/29] RAUL FIORINI LOUZADA           OAB/ES 17823 ... OK tel:(27) 999211501 email:-
+[13/29] BIA FLEISCHMANN RUBINI         OAB/ES 29321 ... OK (sem contato)
+[14/29] FELIPE ALVES BRANDAO           OAB/RS 126550 ... OK (sem contato)
+[15/29] GUILHERME ALVES PRADO          OAB/RS 97495 ... OK (sem contato)
+[16/29] ALEXIA MARINHEIRO ORTEGA       OAB/RS 134109 ... OK (sem contato)
+[17/29] CAIO CESAR BRUN CHAGAS         OAB/PR 63282 ... OK tel:(44) 34230234 email:-
+[18/29] RAFAEL RODRIGUES SALDANHA      OAB/CE 34796 ... OK tel:(85) 988080444 email:-
+[19/29] DIEGO ARTHUR IGARASHI SANCHEZ  OAB/PR 92543 ... OK tel:(41) 34085055 email:-
+[20/29] ALESSANDRO FELIPE OLTRAMARI    OAB/RS 133419 ... OK (sem contato)
+[21/29] CARLOS EDUARDO MACHADO COELHO  OAB/RS 139524 ... OK (sem contato)
+[22/29] BRUNO ALEXANDRE CAPISTRANO DE  OAB/MT 13823-O ... OK (sem contato)
+[23/29] PEDRO MOACYR PINTO JÚNIOR      OAB/MT 7585-O ... OK tel:(65) 30281500 email:-
+[24/29] FERNANDO HENRIQUE CHIARINI LOP OAB/GO 47030 ... OK tel:- email:-
+[25/29] LINDOLFO GONÇALVES DE ANDRADE  OAB/GO 37405 ... OK tel:(64) 36514800 / (64) 984143617 email:-
+[26/29] KAMILLA DIAS DE OLIVEIRA       OAB/GO 47630 ... OK (sem contato)
+[27/29] JHONATAN PEREIRA CECILIO       OAB/MG 227168 ... OK tel:00000000 / (33) 991124516 email:-
+[28/29] VANESSA CRISTINA LOPES         OAB/MG 222666 ... OK tel:00000000 / 999080590 email:-
+[29/29] MARCO ANTONIO RIBEIRO LOUREIRO OAB/CE 37700 ... OK tel:(85) 987266663 email:-
+
+>>> 1 advogado(s) com erro. Reiniciando o navegador e refazendo (passada 2, canal msedge)...
+
+>>> CNA canal (passada 2): msedge
+[retry 1/1] FELIPE LUIS PERIN              OAB/RS RS063176 ... FALHA: sem resultado no CNA
+
+========================================================================
+  RESUMO — Consultar contato CNA
+========================================================================
+  Linhas (ENCONTRADO/INFERIDO): 112
+  [OK com contato]:    71
+  [OK sem contato]:    40
+  [sem registro CNA]:  1
+  [PENDENTE - retoma]: 0
+========================================================================
+
+>>> Planilha DJEN+CNA: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\saida\advogados_djen_cna_2026-09-18_14-49.xlsx

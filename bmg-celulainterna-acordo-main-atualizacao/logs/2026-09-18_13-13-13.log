@@ -1,0 +1,150 @@
+>>> Log desta execucao: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\logs\2026-09-18_13-13-13.log
+>>> bmg-celulainterna-acordo v32-cna-status-retomada <<<
+>>> Tarefa 5 (standalone): Consultar contato CNA
+>>> Site:  https://cna.oab.org.br (navegador proprio, sem o Edge dedicado)
+>>> Entrada: advogados_djen_2026-09-17_17-20_Copia.xlsx  [origem: --djen-xlsx]
+>>> Saida:          advogados_djen_cna_2026-09-18_13-13.xlsx
+
+>>> 112 advogado(s) ENCONTRADO/INFERIDO pra consultar no CNA
+>>> 5 linha(s) puladas (INCERTO/NAO ENCONTRADO/ERRO/sem OAB)
+>>> 112 advogado(s) a consultar nesta execucao
+
+>>> CNA canal: msedge
+[1/112] SABRINA CARVALHO FARIA         OAB/GO 54108 ... OK tel:(62) 984965176 email:-
+[2/112] DAYANE PRYSCILLA PAIVA DA SILV OAB/GO 59348 ... OK tel:(62) 84154933 / (62) 984154933 email:-
+[3/112] POLYANA SANTOS CHAVES          OAB/GO 59930 ... OK tel:- email:-
+[4/112] LUIZ VALDEMIRO SOARES COSTA    OAB/CE 141458 ... FALHA: sem resultado no CNA
+[5/112] LORENA CAVALCANTI CABRAL       OAB/PI 12751 ... OK tel:- email:-
+[6/112] CARLOS HENRIQUE MASSMANN KONRA OAB/RS RS120715 ... OK tel:(55) 55555555 / (55) 996314441 email:-
+[7/112] LILA DAHNE PITTA PINHEIRO      OAB/RS RS037878 ... FALHA: sem resultado no CNA
+[8/112] DOUGLAS TROIAN                 OAB/GO 68854 ... OK (sem contato)
+[9/112] BRENO ALVINO BARROS            OAB/PE 34001 ... OK tel:38775367 / 998350932 email:-
+[10/112] ALEXANDRE BERNARDON            OAB/SC SC038460 ... FALHA: sem resultado no CNA
+[11/112] VANESSA BAUFLENHER DA SILVA    OAB/SC SC046602 ... FALHA: sem resultado no CNA
+[12/112] ISRAEL CESAR OLIVEIRA SELBACH  OAB/RS 81144 ... OK (sem contato)
+[13/112] CAIO CESAR AUADA               OAB/SC 34838 ... OK tel:- email:-
+[14/112] TIAGO ROSSETTI DOS SANTOS      OAB/RS 100920 ... OK tel:(51) 30623188 / (51) 996639362 email:-
+[15/112] BRUNO DORNELLES DOS SANTOS     OAB/RS RS072853 ... FALHA: sem resultado no CNA
+[16/112] THAIS DE MENDONCA ANGELONI     OAB/CE 25695 ... OK tel:(85) 99813572 / (85) 998170202 email:-
+[17/112] THYAGO MOREIRA ALEXANDRE IBIAP OAB/CE 46532 ... OK tel:(85) 32362939 email:-
+[18/112] TAINA CRISTIANE MOLTER         OAB/RS 116658 ... OK (sem contato)
+[19/112] JULIANA CRISTINA MARTINELLI RA OAB/CE 44057 ... OK tel:(47) 21011800 email:-
+[20/112] WELFANE NEVES DA COSTA         OAB/MG 117700 ... OK tel:(32) 33317558 / (32) 988011840 email:-
+[21/112] MICHEL DE OLIVEIRA FRAGA       OAB/MG 223428 ... OK tel:00000000 / 987657528 email:-
+[22/112] FREDERICO JOSE BERTOLIN        OAB/MG 225002 ... OK tel:00000000 / 988357679 email:-
+[23/112] TATIANA RODRIGUES COSTA        OAB/PI 16266 ... OK tel:- email:-
+[24/112] KAMILE VANESSA COSTA GARCIA    OAB/MA 25463 ... OK tel:(98) 984140008 email:-
+[25/112] ERICK WILLIAN BANDEIRA THIBES  OAB/SC 35427 ... OK tel:(47) 33703542 / (47) 991684054 email:-
+[26/112] ADEILSON FERREIRA DE ANDRADE   OAB/RN 4741 ... OK tel:(84) 33173333 / (84) 94238556 email:-
+[27/112] MANOEL PAIXAO NETO             OAB/RN 12200A ... OK tel:(84) 91513180 email:-
+[28/112] JULIO MANUEL URQUETA GOMEZ JUN OAB/RS 130154A ... OK (sem contato)
+[29/112] FABIO JOEL COVOLAN DAUM        OAB/SC 34979 ... OK tel:(49) 30213180 / (49) 999427777 email:-
+[30/112] DANIEL JUNIOR VENDRUSCOLO COLL OAB/RS 128073 ... OK (sem contato)
+[31/112] ANDERSON RODRIGO DOS SANTOS    OAB/SE 14867 ... OK (sem contato)
+[32/112] JULIANA DE BORTOLI NASCIMENTO  OAB/ES 35893 ... OK (sem contato)
+[33/112] ALFREDO PATRICK MONTEIRO       OAB/SC SC044038 ...   [CNA] desafio 'nao sou um robo' em insc 044038/SC - vou trocar de navegador e tentar de novo antes de chamar alguem.
+FALHA: CAPTCHA_CNA
+
+>>> Desafio 'nao sou um robo' apareceu. Interrompendo esta passada (79 advogado(s) pendente(s)) pra tentar em outro navegador.
+
+
+>>> Bloqueio do CNA (rate-limit/captcha) em 1 caso(s). Reiniciando navegador e TROCANDO canal: msedge -> chromium
+
+>>> CNA canal (passada 2): chromium
+[retry 1/85] LUIZ VALDEMIRO SOARES COSTA    OAB/CE 141458 ... FALHA: sem resultado no CNA
+[retry 2/85] LILA DAHNE PITTA PINHEIRO      OAB/RS RS037878 ... FALHA: sem resultado no CNA
+[retry 3/85] ALEXANDRE BERNARDON            OAB/SC SC038460 ... FALHA: sem resultado no CNA
+[retry 4/85] VANESSA BAUFLENHER DA SILVA    OAB/SC SC046602 ... FALHA: sem resultado no CNA
+[retry 5/85] BRUNO DORNELLES DOS SANTOS     OAB/RS RS072853 ... FALHA: sem resultado no CNA
+[retry 6/85] ALFREDO PATRICK MONTEIRO       OAB/SC SC044038 ... FALHA: sem resultado no CNA
+[retry 7/85] CLAUDIO ROBERTO DA SILVA GARCI OAB/RN 16168 ... OK (sem contato)
+[retry 8/85] THAISA NASCIMENTO DA SILVA     OAB/MG 138823 ... OK tel:(38) 36214591 / (38) 997421903 email:-
+[retry 9/85] WARLEY JUNIO DO NASCIMENTO     OAB/MG 192673 ... OK tel:(37) 33213144 / 991681224 email:-
+[retry 10/85] PEDRO SOUSA MONTEIRO           OAB/MG 183184 ... OK tel:(37) 988460800 email:-
+[retry 11/85] PRISCILA FREITAS PEREIRA DA CO OAB/MG 142578 ... OK tel:(37) 33213144 / (37) 996708321 email:-
+[retry 12/85] GILMAR RODRIGUES MONTEIRO      OAB/MG 122095 ... OK tel:(37) 88322706 / (37) 988322706 email:-
+[retry 13/85] THIAGO BARROS INACIO           OAB/MG 155058 ... OK tel:991927604 email:-
+[retry 14/85] GUILHERME DA SILVA GHEDIM      OAB/MG 198294 ... OK tel:(32) 32173077 / (32) 984320813 email:-
+[retry 15/85] EDUARDO DOS SANTOS GOMES       OAB/RS 42763 ... OK tel:(55) 32517997 / (55) 999977657 email:-
+[retry 16/85] ARISTIDIS TZORTZIS JUNIOR      OAB/RS 63256 ... OK tel:(55) 32517997 / (55) 996497992 email:-
+[retry 17/85] JOAO MARCOS DOS SANTOS COSTA   OAB/MG 196709 ... OK tel:984251814 email:-
+[retry 18/85] TATYANE VERONICA DE ALMEIDA    OAB/MG 111457 ... OK tel:984091533 email:-
+[retry 19/85] DIEGO DOS SANTOS HERNANDEZ     OAB/RS 71476 ... OK tel:(51) 32257188 email:-
+[retry 20/85] ELIESER DA SILVEIRA FARIA      OAB/MG 142071 ... OK tel:(34) 88438070 email:-
+[retry 21/85] ROBERTA DOS REIS RABELO ROSA   OAB/ES 36479 ... OK tel:(27) 32221877 / (27) 999586968 email:-
+[retry 22/85] ANTONIO MATHEUS SILVA CARLOS   OAB/RN 14635 ... OK tel:- email:-
+[retry 23/85] RENATO GONÇALVES RIBEIRO       OAB/GO 55140 ... OK tel:- email:-
+[retry 24/85] TARCÍSIO ANTÔNIO DA SILVA BRIT OAB/GO 43026 ... OK tel:- email:-
+[retry 25/85] JOAO RAFAEL MACHADO BIASIBETTI OAB/RS 107127 ... OK tel:(51) 997196017 email:-
+[retry 26/85] IGOR CLECIO XAVIER             OAB/RS 77907 ... OK tel:(51) 33684822 / (51) 982031043 email:-
+[retry 27/85] FABIANA APARECIDA MOREIRA NEVE OAB/MG 151993 ... OK tel:(31) 99961768 / (31) 999617683 email:-
+[retry 28/85] LUCIANA MARQUES                OAB/MG 188321 ... OK tel:(31) 94014291 / (31) 994014291 email:-
+[retry 29/85] GEOVANNA CRIZEL DE FREITAS     OAB/RS 130498 ... OK (sem contato)
+[retry 30/85] ATHENA CAMPOS DUARTE ANTELO SI OAB/MT 17802-O ... OK (sem contato)
+[retry 31/85] FABRICIO DOS SANTOS            OAB/RS 110127 ... OK tel:(54) 36328267 / (54) 999426161 email:-
+[retry 32/85] JESSICA MAYRA DA CUNHA ABREU M OAB/PE 48820 ... OK tel:(81) 31261385 / (81) 997882889 email:-
+[retry 33/85] DANILO DO NASCIMENTO FERREIRA  OAB/PE 65242 ... OK (sem contato)
+[retry 34/85] EDUARDO MACALLI DA SILVA       OAB/RS 83063 ... OK tel:(55) 33132183 email:-
+[retry 35/85] THIAGO ROBERTO GEBERT GARCIA   OAB/RS 79917 ... OK tel:(55) 33132183 / (55) 999496035 email:-
+[retry 36/85] EVELIN DAYANE PEDROSO BELIZARI OAB/MT 20309-O ... OK tel:- email:-
+[retry 37/85] SERGIO ARAUJO NIELSEN          OAB/ES 12140 ... OK (sem contato)
+[retry 38/85] AMIEL DIAS DE LUIZ             OAB/RS 78403 ... OK tel:(51) 32761024 / (51) 984941902 email:-
+[retry 39/85] VITOR RENATO NUNES MACHADO     OAB/RS 125223 ... OK (sem contato)
+[retry 40/85] EDUARDO BAZZAN CESARINO        OAB/RS 131550 ... OK (sem contato)
+[retry 41/85] JUCIEL FERREIRA MIRANDA        OAB/MT 278660-O ... FALHA: sem resultado no CNA
+[retry 42/85] GUSTAVO HENRIQUE JANUARIO BATI OAB/GO 67639 ... OK (sem contato)
+[retry 43/85] EDUARDO MACALLI DA SILVA       OAB/RS 83063 (cache)
+[retry 44/85] THIAGO ROBERTO GEBERT GARCIA   OAB/RS 79917 (cache)
+[retry 45/85] TAMARA PORTO RODRIGUES         OAB/RS 111423 ... OK tel:(51) 37852300 / (51) 91060087 email:-
+[retry 46/85] ITALO DA SILVA FRAGA           OAB/GO 36864 ... OK (sem contato)
+[retry 47/85] CARINE TERESINHA CAL SCHNEIDER OAB/RS 121091 ... OK (sem contato)
+[retry 48/85] RAYANE MOREIRA LIBANO          OAB/MT 22967-O ... OK (sem contato)
+[retry 49/85] EDIR BRAGA JUNIOR              OAB/MT 4735-A ... OK tel:(66) 34233701 / (66) 999842624 email:-
+[retry 50/85] JUAN DOS SANTOS TEIXEIRA       OAB/RS 91547 ... OK (sem contato)
+[retry 51/85] EDSON AUGUSTO FERREIRA ALCANTA OAB/MG 97650 ... OK tel:(31) 32240660 email:-
+[retry 52/85] VANESSA MORAIS DALA ROSA GOMES OAB/MG 176020 ... OK tel:00000000 / (31) 996978883 email:-
+[retry 53/85] LEONARDO JAMEL SALIBA DE SOUZA OAB/MG 115946 ... OK tel:(31) 32934238 email:-
+[retry 54/85] TIAGO DOS SANTOS RIBEIRO       OAB/GO 40046 ... OK (sem contato)
+[retry 55/85] ITALO DA SILVA FRAGA           OAB/GO 36864 (cache)
+[retry 56/85] LETICIA BATISTA COSTA          OAB/MG 206959 ... 
+========================================================================
+  !! CNA PEDIU CONFIRMACAO 'NAO SOU UM ROBO' !!
+========================================================================
+  Parou em: insc 206959/MG
+  ACAO NECESSARIA - na JANELA DO NAVEGADOR que esta aberta:
+    1. Marque o quadradinho 'Nao sou um robo'.
+    2. Se aparecer desafio de imagens, resolva.
+    3. Pronto - o robo detecta sozinho e continua daqui.
+  Aguardando ate 5 minuto(s)...
+  (o que ja foi consultado ate agora JA ESTA SALVO)
+========================================================================
+
+  [CNA] ainda aguardando o 'Nao sou um robo'... (268s restantes)
+  [CNA] ainda aguardando o 'Nao sou um robo'... (238s restantes)
+  [CNA] ainda aguardando o 'Nao sou um robo'... (207s restantes)
+  [CNA] ainda aguardando o 'Nao sou um robo'... (176s restantes)
+  [CNA] ainda aguardando o 'Nao sou um robo'... (145s restantes)
+  [CNA] ainda aguardando o 'Nao sou um robo'... (114s restantes)
+  [CNA] ainda aguardando o 'Nao sou um robo'... (84s restantes)
+  [CNA] ainda aguardando o 'Nao sou um robo'... (53s restantes)
+  [CNA] ainda aguardando o 'Nao sou um robo'... (22s restantes)
+  [CNA] ninguem resolveu o desafio em 300s.
+FALHA: CAPTCHA_CNA
+
+>>> Desafio 'nao sou um robo' NAO foi resolvido a tempo. Parando o lote CNA (29 advogado(s) nao consultado(s)).
+>>> O que ja foi consultado ESTA SALVO na planilha.
+>>> Rode a Tarefa 5 de novo com alguem por perto pra resolver o desafio quando ele aparecer.
+
+
+========================================================================
+  RESUMO — Consultar contato CNA
+========================================================================
+  Linhas (ENCONTRADO/INFERIDO): 112
+  [OK com contato]:    55
+  [OK sem contato]:    21
+  [sem registro CNA]:  7
+  [PENDENTE - retoma]: 1
+========================================================================
+>>> 1 advogado(s) ainda PENDENTE(s) (captcha/rate-limit/timeout nao resolvidos). Rode a Tarefa 5 de novo - so eles serao reconsultados.
+
+>>> Planilha DJEN+CNA: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\saida\advogados_djen_cna_2026-09-18_13-13.xlsx

@@ -1,0 +1,62 @@
+# BLACKLIST DE ADVOGADOS - bmg-celulainterna-acordo
+#
+# Advogados listados aqui NUNCA sao tratados como advogado do AUTOR na
+# Tarefa 4 (DJEN). Use pra:
+#   - socios LD (que representam o Banco BMG)
+#   - advogados/bancas que voce SABE que sao do Banco e aparecem em
+#     comunicacoes mistas, atrapalhando a identificacao do Autor.
+#
+# CUIDADO: NAO coloque aqui advogado de Autor que tenha muitos processos
+# contra o BMG - ele seria descartado erroneamente em todas as causas dele.
+#
+# FORMATO: um por linha, campos separados por | (barra vertical):
+#     NOME PARCIAL | OAB | UF
+# - Basta casar o NOME (parcial, sem acento) OU a OAB pra excluir.
+# - UF e opcional (informativo).
+# - Linhas em branco e linhas comecando com # sao ignoradas.
+#
+# Editavel pela GUI (botao "Blacklist de advogados") ou neste arquivo.
+
+# --- Socios Lucchesi Dolabela (representam o Banco BMG) ---
+KELI LUCCHESI | 90395 | MG
+LOUIS DOLABELA | 124826 | MG
+ADRIANO LUCCHESI | 176171 | MG
+
+# --- Advogados/bancas do Banco BMG (semente da lista do Leandro) ---
+# Conferir e remover qualquer um que apareca legitimamente como advogado
+# de Autor (a comparacao e por nome parcial, sem acento).
+ANTONIO DE MORAES DOURADO NETO |  |
+GIOVANNA MORILLO |  |
+FERNANDA RAFAELLA |  |
+CRISTIANA NEPOMUCENO |  |
+FELIPE GAZOLA |  |
+EUGENIO COSTA FERREIRA DE MELO | 103082 | MG
+EUGENIO COSTA FERREIRA DE MELO | 217932 | MG
+RENATO CHAGAS CORREA |  |
+PEDRO MIRANDA DE OLIVEIRA |  |
+SERGIO GONINI BENICIO |  |
+GLAUCO GOMES MADUREIRA |  |
+THIAGO MAHFUZ VEZZI |  |
+DENNER DE BARROS |  |
+MARCO ANTONIO GOULART LANES |  |
+ANDRE RENNO LIMA |  |
+BREINER RICARDO |  |
+JOAO FRANCISCO ALVES ROSA |  |
+MARINA BASTOS DA PORCIUNCULA BENGHI |  |
+ROBERTA DA CAMARA LIMA CAVALCANTI |  |
+JESSICA APARECIDA RESCIGNO DE FRANCA |  |
+PAULO ANTONIO MULLER |  |
+FABIO FRASATO CAIRES |  |
+LEONARDO FIALHO PINTO |  |
+PETERSON DOS SANTOS |  |
+RAPHAEL RAMOS ABRAHAO |  |
+RODRIGO SCOPEL |  |
+ANDRE LUIS SONNTAG | 36620 |
+CLARISSA FIGUEIREDO LOBO | 37964 |
+FELIPE BARRETO TOLENTINO |  |
+HENRIQUE JOSE PARADA SIMAO |  |
+YANA CAVALCANTE |  |
+BERNARDO RODRIGUES |  |
+FLAVIA ALMEIDA MOURA |  |
+RICARDO LOPES GODOY |  |
+CARLOS ANTONIO HARTEN |  |

@@ -1,0 +1,8 @@
+>>> Log desta execucao: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\logs\2026-09-18_13-09-32.log
+>>> bmg-celulainterna-acordo v32-cna-status-retomada <<<
+>>> Tarefa 5 (standalone): Consultar contato CNA
+>>> Site:  https://cna.oab.org.br (navegador proprio, sem o Edge dedicado)
+>>> Entrada: advogados_djen_xxxx.xlsx  [origem: --djen-xlsx]
+
+ERRO: nao encontrei planilha de advogados pra consultar.
+Rode a Tarefa 4 (--so-djen) antes, ou informe a planilha do Banco.

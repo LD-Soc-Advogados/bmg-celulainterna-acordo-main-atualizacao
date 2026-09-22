@@ -1,0 +1,15 @@
+# LISTA DE AGRESSORES - bmg-celulainterna-acordo
+#
+# Advogados listados aqui recebem SIM na coluna "Na_Lista_Agressores" da
+# saida do DJEN (Tarefa 4). NAO sao excluidos - apenas SINALIZADOS, pra o
+# operador conferir antes de negociar.
+#
+# FORMATO: um por linha, campos separados por | (barra vertical):
+#     NOME PARCIAL | OAB | UF
+# - Basta casar o NOME (parcial, sem acento) OU a OAB pra sinalizar.
+# - UF e opcional (informativo).
+# - Linhas em branco e linhas comecando com # sao ignoradas.
+#
+# Editavel pela GUI (botao "Lista de Agressores") ou neste arquivo.
+# (Coloque abaixo os nomes/OABs. Vale a partir da PROXIMA rodada do DJEN.)
+

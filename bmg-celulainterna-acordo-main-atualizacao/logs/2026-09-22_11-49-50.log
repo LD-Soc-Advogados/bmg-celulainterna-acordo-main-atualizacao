@@ -1,0 +1,106 @@
+>>> Log desta execucao: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\logs\2026-09-22_11-49-50.log
+>>> bmg-celulainterna-acordo v32-cna-status-retomada <<<
+>>> Tarefa 5 (standalone): Consultar contato CNA
+>>> Site:  https://cna.oab.org.br (navegador proprio, sem o Edge dedicado)
+>>> Entrada: advogados_djen_2026-09-21_17-19Copia.xlsx  [origem: saida DJEN informada]
+>>> Saida:          advogados_djen_cna_2026-09-22_11-49.xlsx
+
+>>> 83 advogado(s) ENCONTRADO/INFERIDO pra consultar no CNA
+>>> 9 linha(s) puladas (INCERTO/NAO ENCONTRADO/ERRO/sem OAB)
+>>> 11 advogado(s) ja resolvido(s) em rodada(s) anterior(es) - reaproveitando (--forcar reconsulta tudo).
+>>> 72 advogado(s) a consultar nesta execucao
+
+>>> CNA canal: msedge
+\\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\.venv\Lib\site-packages\playwright_stealth\stealth.py:216: UserWarning: Stealth has already been applied to this page or context. Skipping duplicate application.
+  warnings.warn(
+[1/72] ANA PIERINA CUNHA SOUSA        OAB/PI 15343 ... OK (sem contato)
+[2/72] DAIANNE CRISTINE APARECIDA DOS OAB/MG 161928 ... OK tel:(31) 71248592 / (31) 971248592 email:-
+[3/72] SAMIA LUCIANO BARRETO          OAB/CE 25547 ... OK tel:(88) 996392029 email:-
+[4/72] MARCOS VINICIUS ARAUJO VELOSO  OAB/PI 8526 ... OK tel:- email:-
+[5/72] IGOR BRITO DE LIMA             OAB/SC SC056525A ... FALHA: sem resultado no CNA
+[6/72] EMELYZA PAULA SILVA DE LIMA    OAB/AP 3179 ... OK (sem contato)
+[7/72] VICTOR CERQUEIRA ASSAD         OAB/ES 16776 ... OK tel:(28) 35210498 email:-
+[8/72] JOSE PAULO PONTES OLIVEIRA     OAB/PB 24716 ... OK (sem contato)
+[9/72] EDUARDA ROSA ZOLET             OAB/RS 111424 ... OK tel:- email:-
+[10/72] AMANDA ZOLET                   OAB/RS 126879 ... OK tel:(54) 32425376 / (54) 996321721 email:-
+[11/72] CLAUDIA TARGINO MUNIZ DE LIMA  OAB/RN 12923 ... OK (sem contato)
+[12/72] TAINA PAGANI COLOMBO           OAB/SC 33402 ... OK tel:(48) 99642666 / (48) 999642666 email:-
+[13/72] ALINE FERNANDES MARQUES        OAB/SC 42503 ... OK tel:(48) 92073981 / (48) 992073981 email:-
+[14/72] LISANDRO GULARTE MORAES        OAB/RS 43547 ... OK tel:(51) 30135195 / (51) 999717192 email:-
+[15/72] CICERO DORIA VERAS CANABARRO   OAB/RS 89070 ... OK tel:(51) 30223062 email:-
+[16/72] JULIANA GULARTE MORAES         OAB/RS 60296 ... OK tel:(51) 30135195 / (51) 993236541 email:-
+[17/72] APARECIDA DE SOUZA SANTANA     OAB/RN 17227 ... OK (sem contato)
+[18/72] ITALA KARINE DA COSTA PRADO    OAB/RN 16512 ... OK (sem contato)
+[19/72] OLIMPIERRI MALLMANN            OAB/SC SC024766 ... FALHA: sem resultado no CNA
+[20/72] CLEZIO DE OLIVEIRA FERNANDES   OAB/RN 3429 ... OK tel:(84) 33313581 / (84) 999785736 email:-
+[21/72] CARLOS MAGNO ALEXANDRE VIEIRA  OAB/GO 39746 ... OK tel:(62) 96311604 / (62) 996622450 email:-
+[22/72] PAULO RICARDO MACIEL GONZALEZ  OAB/CE 30327 ... OK (sem contato)
+[23/72] RAINIER RICARTY GONDIM COSTA   OAB/CE 42239 ... OK (sem contato)
+[24/72] SILVANIO AMELIO MARQUES        OAB/GO 31741 ... OK tel:(62) 39221882 / (62) 999746908 email:-
+[25/72] GUSTAVO DE FREITAS ESCOBAR     OAB/GO 25790 ... OK (sem contato)
+[26/72] LAIS SILVA FERREIRA            OAB/GO 61112 ... OK (sem contato)
+[27/72] DÉBORA CUSTÓDIO LIMA           OAB/GO 68072 ... FALHA: sem resultado no CNA
+[28/72] THIAGO VALDIR BOSCATO          OAB/PR 119084 ... OK tel:(49) 91366526 email:-
+[29/72] JEAN CARLOS FERREIRA DE MORAES OAB/GO 75699 ... OK (sem contato)
+[30/72] SUSANA ERVATI URBANO           OAB/ES 39093 ... OK (sem contato)
+[31/72] SARA ELIS FANTECELLE MATTOS    OAB/ES 39775 ... OK tel:- email:-
+[32/72] LEONARDO FELIPE CARRIJO RODRIG OAB/GO 70966 ... OK (sem contato)
+[33/72] PATRICIA RODRIGUES MARTINS SIQ OAB/GO 49226 ... OK (sem contato)
+[34/72] PAULO PAZ DE LIRA              OAB/PE 10967 ... OK tel:- email:-
+[35/72] VICTOR BRENDO MENEZES SANTOS   OAB/AP 5244 ... OK (sem contato)
+[36/72] MANOELA DE CRUZEIRO ISER GLASE OAB/GO 70745 ... OK (sem contato)
+[37/72] GLAUCE MARIA RODRIGUES         OAB/GO 27421 ... OK tel:(61) 85925558 / (61) 998176966 email:-
+[38/72] VICTOR HUGO RIBEIRO HENRIQUE S OAB/GO 42096 ... OK tel:(64) 36743613 / (64) 992515675 email:-
+[39/72] ADRIANA CASTILHO RAMOS         OAB/MG 141577 ... OK tel:(31) 36613683 / (31) 997372252 email:-
+[40/72] CASSIO RENAN MEURER            OAB/RS 108096 ... OK (sem contato)
+[41/72] JONAS BAUERMANN STAUDT         OAB/RS 100999 ... OK (sem contato)
+[42/72] TIAGO IGANSI GONCALVES         OAB/RS 127815 ... OK tel:(51) 34310300 / (51) 996629333 email:-
+[43/72] IGANSI SOCIEDADE INDIVIDUAL DE OAB/RS 12476 ... OK (sem contato)
+[44/72] JOSE GUILHERME BRITO BIDINOTO  OAB/RS 137786 ... OK (sem contato)
+[45/72] ELAINE ODA E SILVA             OAB/GO 74709 ... OK (sem contato)
+[46/72] FERNANDO ODA E SILVA           OAB/GO 34013 ... OK (sem contato)
+[47/72] DEUSIMAR ODA E SILVA           OAB/GO 65459 ... OK (sem contato)
+[48/72] ADONIAS PEREIRA BARROS JUNIOR  OAB/GO 45251 ... OK tel:(62) 85983834 / (62) 985480730 email:-
+[49/72] JESSICA CABRAL LARA            OAB/GO 41731 ... OK tel:(62) 36228432 / (62) 981888305 email:-
+[50/72] ELVISON AMARAL LIMA            OAB/ES 33676 ... OK (sem contato)
+[51/72] OZENILSON MIRANDA GALINDO      OAB/PE 53438 ... OK tel:(87) 991573027 email:-
+[52/72] DANILO GALINDO PAES DE LIRA    OAB/PE 19846 ... OK tel:(87) 38391259 / (87) 991398018 email:-
+[53/72] LUCIANO DA SILVA QUINTAS       OAB/MG 137905 ... OK tel:(31) 35315313 / (31) 987619688 email:-
+[54/72] BRUNO GABRIEL LOPES SILVA      OAB/MG 189629 ... OK tel:998679410 email:-
+[55/72] ROLAN PIRES THOMAZ             OAB/MG 99500 ... OK tel:00000000 / 988448044 email:-
+[56/72] VILSON ADEMIR NIENOW           OAB/RS 82335 ... OK (sem contato)
+[57/72] JAVIER FRANCISCO SUAREZ FLORES OAB/RS 136529 ... OK (sem contato)
+[58/72] BARBARA BARBOSA PARREIRAS DOS  OAB/MG 180058 ... OK tel:(31) 95465125 / (31) 999459118 email:-
+[59/72] EDUARDO HENRIQUE DA FONSECA ZE OAB/MT 15863-O ... OK tel:(65) 36824486 / (65) 981278919 email:-
+[60/72] ROBERTA POZZEBON BATTISTI      OAB/RS RS111068 ... OK tel:(54) 34611996 email:-
+[61/72] RODRIGO FIGUEIRA DA SILVA      OAB/RS 68689 ... OK tel:(51) 93660566 / (51) 999622800 email:-
+[62/72] ELISANGELA JAQUELINE FREITAS S OAB/RS 118606 ... OK (sem contato)
+[63/72] GUSTAVO GIOVANELLA MARQUES     OAB/RS 110602 ... OK tel:(51) 999530451 email:-
+[64/72] WILLYS CARMO DE AZEVEDO        OAB/SE 14366 ... OK tel:- email:-
+[65/72] FRANCISCO RAFAEL REGIS OLIVEIR OAB/RN 8856A ... OK (sem contato)
+[66/72] GERALDINE MIEKO FRANCO DE ALME OAB/MG 185788 ... OK tel:(35) 30646528 / 999211476 email:-
+[67/72] ANA CRISTINA DIB MAGALHÃES     OAB/MG 153119 ... OK tel:(35) 32215851 / (35) 997363013 email:-
+[68/72] LUZIA CRISTINA LUZ CARVALHO    OAB/MG 116176 ... OK tel:(35) 32215851 / 991401725 email:-
+[69/72] RODRIGO SOUZA DE ALMEIDA       OAB/MG 175470 ... OK tel:(35) 32123287 / (35) 988421961 email:-
+[70/72] PEDRO MARCON DE JESUS          OAB/RS 106951 ... OK tel:(51) 32111606 email:-
+[71/72] LUCAS MARCON DE JESUS          OAB/RS 111227 ... OK tel:(51) 32111606 / (51) 996517117 email:-
+[72/72] JESSICA RODRIGUES DOS REIS     OAB/MG 170914 ... OK tel:- email:-
+
+>>> 3 advogado(s) com erro. Reiniciando o navegador e refazendo (passada 2, canal msedge)...
+
+>>> CNA canal (passada 2): msedge
+[retry 1/3] IGOR BRITO DE LIMA             OAB/SC SC056525A ... FALHA: sem resultado no CNA
+[retry 2/3] OLIMPIERRI MALLMANN            OAB/SC SC024766 ... FALHA: sem resultado no CNA
+[retry 3/3] DÉBORA CUSTÓDIO LIMA           OAB/GO 68072 ... FALHA: sem resultado no CNA
+
+========================================================================
+  RESUMO — Consultar contato CNA
+========================================================================
+  Linhas (ENCONTRADO/INFERIDO): 83
+  [OK com contato]:    51
+  [OK sem contato]:    29
+  [sem registro CNA]:  3
+  [PENDENTE - retoma]: 0
+========================================================================
+
+>>> Planilha DJEN+CNA: \\server\Arq_L\Ester-Dev\bmg-celulainterna-acordo-main\bmg-celulainterna-acordo-main\saida\advogados_djen_cna_2026-09-22_11-49.xlsx
