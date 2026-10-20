@@ -22,11 +22,17 @@ Portado de bmg-workflow-closer/iniciar.py, adaptado para:
 """
 import os
 import re
+import shutil
+import urllib.request
+import zipfile
+import tempfile
+import stat
 import subprocess
 import sys
 import threading
 import tkinter as tk
 from pathlib import Path
+from pathlib import PurePosixPath
 from tkinter import filedialog, messagebox, scrolledtext
 
 try:
@@ -37,6 +43,116 @@ except ImportError:
 
 
 ROOT = Path(__file__).resolve().parent
+
+
+def _atualizar_por_zip(raiz_instalacao: Path) -> list:
+    """Atualiza uma copia sem .git baixando somente arquivos do repo.
+
+    Preserva configuracao, credenciais, planilhas, logs e saidas locais.
+    """
+    repositorio = "LD-Soc-Advogados/bmg-celulainterna-acordo-main-atualizacao"
+    pacote = "bmg-celulainterna-acordo-main-atualizacao"
+    url = f"https://github.com/{repositorio}/archive/refs/heads/main.zip"
+    requisicao = urllib.request.Request(url, headers={"User-Agent": "BMG-CelulaInternaAcordo-Updater"})
+    raiz_instalacao = Path(raiz_instalacao).resolve()
+    protegidos = {
+        ".git", ".venv", "venv", "downloads", "logs", "saida",
+        ".cna_profile", ".cna_profile_chromium", "__pycache__",
+    }
+    arquivos_locais = {
+        ".env", ".last_planilha.txt", "controle.xlsx",
+        "Planilha Envio de casos.xlsx", "blacklist_advogados.txt",
+        "lista_agressores.txt",
+    }
+
+    with tempfile.TemporaryDirectory(prefix="bmg-atualizacao-") as temp:
+        temporario = Path(temp)
+        zip_path = temporario / "main.zip"
+        with urllib.request.urlopen(requisicao, timeout=60) as resposta:
+            zip_path.write_bytes(resposta.read())
+
+        staged = temporario / "arquivos"
+        staged.mkdir()
+        with zipfile.ZipFile(zip_path) as arquivo_zip:
+            encontrados = 0
+            for item in arquivo_zip.infolist():
+                partes = PurePosixPath(item.filename).parts
+                try:
+                    pos_pacote = partes.index(pacote)
+                except ValueError:
+                    continue
+                partes_relativas = partes[pos_pacote + 1:]
+                if item.is_dir() or not partes_relativas or ".." in partes_relativas:
+                    continue
+                if any(parte in protegidos for parte in partes_relativas):
+                    continue
+                relativo = PurePosixPath(*partes_relativas)
+                if relativo.name in arquivos_locais or relativo.name.startswith("~$"):
+                    continue
+                if relativo.suffix.lower() in {".xlsx", ".xlsm", ".log", ".pyc", ".pyo"}:
+                    continue
+                modo_unix = item.external_attr >> 16
+                if stat.S_ISLNK(modo_unix):
+                    continue
+                destino = staged.joinpath(*partes_relativas)
+                destino.parent.mkdir(parents=True, exist_ok=True)
+                with arquivo_zip.open(item) as origem, destino.open("wb") as saida:
+                    shutil.copyfileobj(origem, saida)
+                encontrados += 1
+
+        if not encontrados:
+            raise RuntimeError("O pacote baixado nao contem os arquivos esperados do projeto.")
+
+        backups = {}
+        criados = []
+        atualizados = []
+        try:
+            for origem in staged.rglob("*"):
+                if not origem.is_file():
+                    continue
+                relativo = origem.relative_to(staged)
+                destino = raiz_instalacao / relativo
+                destino.parent.mkdir(parents=True, exist_ok=True)
+                if destino.exists() and destino.read_bytes() == origem.read_bytes():
+                    continue
+                if destino.exists():
+                    backup = temporario / "backup" / relativo
+                    backup.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(destino, backup)
+                    backups[destino] = backup
+                else:
+                    criados.append(destino)
+                shutil.copy2(origem, destino)
+                atualizados.append(relativo.as_posix())
+        except Exception:
+            for destino in criados:
+                try:
+                    destino.unlink(missing_ok=True)
+                except Exception:
+                    pass
+            for destino, backup in backups.items():
+                try:
+                    shutil.copy2(backup, destino)
+                except Exception:
+                    pass
+            raise
+
+    return sorted(atualizados)
+
+
+def _resumo_atualizacao_zip(arquivos: list) -> str:
+    if not arquivos:
+        return "Esta pasta ja esta atualizada. Nenhum arquivo precisou ser alterado."
+    linhas = [f"Arquivos atualizados: {len(arquivos)}."]
+    if "requirements.txt" in arquivos:
+        linhas.append("As dependencias mudaram. Rode setup.ps1 antes de iniciar o robo.")
+    if "iniciar.py" in arquivos:
+        linhas.append("Feche e abra o iniciador novamente para carregar a versao nova.")
+    else:
+        linhas.append("Voce pode usar o robo normalmente.")
+    return "\n\n".join(linhas)
+
+
 VENV_PYTHON = ROOT / ".venv" / "Scripts" / "python.exe"
 MAIN_PY = ROOT / "main.py"
 LAST_PLANILHA_FILE = ROOT / ".last_planilha.txt"
@@ -548,13 +664,14 @@ class App:
                 creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0,
             )
         except FileNotFoundError:
+            try:
+                arquivos = _atualizar_por_zip(ROOT)
+            except Exception as erro:
+                self.btn_atualizar.config(state=tk.NORMAL, text="Atualizar do GitHub")
+                messagebox.showerror("Erro ao atualizar", f"Nao consegui baixar a atualizacao.\n\n{type(erro).__name__}: {erro}")
+                return
             self.btn_atualizar.config(state=tk.NORMAL, text="Atualizar do GitHub")
-            messagebox.showerror(
-                "Git nao encontrado",
-                "O Git nao esta instalado neste PC.\n\n"
-                "Baixe em https://git-scm.com/download/win e refaca a "
-                "instalacao seguindo o INSTALL.md.",
-            )
+            messagebox.showinfo("Atualizacao concluida", _resumo_atualizacao_zip(arquivos))
             return
         except subprocess.TimeoutExpired:
             self.btn_atualizar.config(state=tk.NORMAL, text="Atualizar do GitHub")
@@ -574,6 +691,14 @@ class App:
 
         # Caso 1: erro no git pull (rede, auth, conflito)
         if resultado.returncode != 0:
+            if "not a git repository" in saida.lower():
+                try:
+                    arquivos = _atualizar_por_zip(ROOT)
+                except Exception as erro:
+                    messagebox.showerror("Erro ao atualizar", f"Esta pasta nao tem Git e o download alternativo falhou.\n\n{type(erro).__name__}: {erro}")
+                    return
+                messagebox.showinfo("Atualizacao concluida", _resumo_atualizacao_zip(arquivos))
+                return
             messagebox.showerror(
                 "Erro ao atualizar",
                 f"git pull falhou (codigo {resultado.returncode}).\n\n"
