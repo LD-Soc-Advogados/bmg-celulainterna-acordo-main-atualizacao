@@ -45,7 +45,7 @@ _CABECALHO = (["CIV", "Cliente", "CNJ", "Estado"] + _ROTULOS_CAMPO
               + ["Estagio",
                  "Revisar", "Motivo_Revisao",
                  "Nao_Exigivel", "Observacao_Negociador",
-                 "Capturado_em"])
+                 "Capturado_em", "Status", "Motivo", "Arquivo_Origem"])
 
 # Destaques na saida:
 #   - Revisar = amarelo suave (lancamento nao-condenacao usado como fallback)
@@ -63,6 +63,9 @@ class LinhaFinanceiro:
     # dict {chave: valor} vindo de aba_financeiro.extrair_financeiro().
     campos: dict = field(default_factory=dict)
     capturado_em: str = ""
+    status: str = "OK"
+    motivo: str = ""
+    arquivo_origem: str = ""
 
 
 def _garantir_workbook(caminho: Path):
@@ -79,6 +82,19 @@ def _garantir_workbook(caminho: Path):
     return wb, ws
 
 
+def _garantir_colunas(ws):
+    existentes = [ws.cell(1, c).value for c in range(1, ws.max_column + 1)] if ws.max_row else []
+    if not existentes or not existentes[0]:
+        ws.append(_CABECALHO)
+        for c in range(1, len(_CABECALHO) + 1):
+            ws.cell(1, c).font = Font(bold=True)
+        return
+    for coluna in _CABECALHO:
+        if coluna not in existentes:
+            ws.cell(1, ws.max_column + 1, coluna).font = Font(bold=True)
+            existentes.append(coluna)
+
+
 def registrar_financeiro(caminho_xlsx: Path, linha: LinhaFinanceiro) -> None:
     """Adiciona uma linha (cria o arquivo se nao existir)."""
     caminho_xlsx = Path(caminho_xlsx)
@@ -87,6 +103,7 @@ def registrar_financeiro(caminho_xlsx: Path, linha: LinhaFinanceiro) -> None:
         linha.capturado_em = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     wb, ws = _garantir_workbook(caminho_xlsx)
+    _garantir_colunas(ws)
     valores = [
         sanitize_xlsx(linha.civ),
         sanitize_xlsx(linha.cliente),
@@ -103,52 +120,61 @@ def registrar_financeiro(caminho_xlsx: Path, linha: LinhaFinanceiro) -> None:
     valores.append(sanitize_xlsx(nao_exigivel))
     valores.append(sanitize_xlsx(str(linha.campos.get(CHAVE_MOTIVO_NAO_EXIGIVEL, "") or "")))
     valores.append(sanitize_xlsx(linha.capturado_em))
-    ws.append(valores)
-    n_col = len(_CABECALHO)
+    valores.extend([sanitize_xlsx(linha.status), sanitize_xlsx(linha.motivo), sanitize_xlsx(linha.arquivo_origem)])
+    indices = {ws.cell(1, c).value: c for c in range(1, ws.max_column + 1)}
+    row = ws.max_row + 1
+    for coluna, valor in zip(_CABECALHO, valores):
+        ws.cell(row, indices[coluna], valor)
     # Colunas na ordem (a partir do fim): Capturado_em, Observacao_Negociador,
     # Nao_Exigivel, Motivo_Revisao, Revisar.
     if revisar:
-        ws.cell(row=ws.max_row, column=n_col - 4).fill = _FILL_REVISAR
+        ws.cell(row=row, column=indices["Revisar"]).fill = _FILL_REVISAR
     if nao_exigivel:
-        ws.cell(row=ws.max_row, column=n_col - 2).fill = _FILL_NAO_EXIGIVEL
+        ws.cell(row=row, column=indices["Nao_Exigivel"]).fill = _FILL_NAO_EXIGIVEL
     salvar_workbook_com_retry(wb, caminho_xlsx)
     wb.close()
 
 
-def ja_capturado(caminho_xlsx: Path, civ: str) -> bool:
+def obter_captura_valida(caminho_xlsx: Path, civ: str):
+    """Localiza somente uma captura anterior com dados financeiros validos."""
     caminho_xlsx = Path(caminho_xlsx)
     if not caminho_xlsx.exists():
-        return False
+        return None
     civ_norm = (civ or "").strip().upper()
     if not civ_norm:
-        return False
+        return None
     wb = openpyxl.load_workbook(str(caminho_xlsx), read_only=True, data_only=True)
     try:
         ws = wb.active
-        for row in ws.iter_rows(min_row=2, max_col=1, values_only=True):
-            cel = row[0]
-            if cel and str(cel).strip().upper() == civ_norm:
-                return True
+        headers = {str(c.value).strip(): c.column for c in ws[1] if c.value}
+        idx_civ = headers.get("CIV", 1)
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            cel = row[idx_civ - 1] if len(row) >= idx_civ else None
+            if not cel or str(cel).strip().upper() != civ_norm:
+                continue
+            status = str(row[headers["Status"] - 1] or "").upper() if "Status" in headers else "OK"
+            campos = {chave: (row[headers[rotulo] - 1] or "") for chave, rotulo in CAMPOS if rotulo in headers}
+            if status in ("", "OK", "JA_CAPTURADO") and campos.get("cod_lancto") and (campos.get("tipo_lancto") or campos.get("data_pagamento") or campos.get("valor")):
+                return campos, caminho_xlsx.name
     finally:
         wb.close()
-    return False
+    return None
 
+def ja_capturado(caminho_xlsx: Path, civ: str) -> bool:
+    return obter_captura_valida(caminho_xlsx, civ) is not None
 
-def ja_capturado_em_pasta(pasta_saida: Path, civ: str) -> bool:
-    """Idempotencia cross-arquivos: True se a CIV ja foi capturada em
-    QUALQUER financeiro_*.xlsx da pasta."""
+def ja_capturado_em_pasta(pasta_saida: Path, civ: str):
+    """Retorna dados + arquivo apenas se existir captura valida."""
     pasta_saida = Path(pasta_saida)
     if not pasta_saida.exists():
-        return False
-    civ_norm = (civ or "").strip().upper()
-    if not civ_norm:
-        return False
+        return None
     for arq in sorted(pasta_saida.glob("financeiro_*.xlsx")):
         if arq.name.startswith("~$"):
             continue
         try:
-            if ja_capturado(arq, civ):
-                return True
+            captura = obter_captura_valida(arq, civ)
+            if captura:
+                return captura
         except Exception:
             continue
-    return False
+    return None

@@ -26,6 +26,7 @@ Flags:
   --so-downloads           Roda apenas a Tarefa 2 (pula mensagem).
 """
 import argparse
+from collections import Counter
 import random
 import re
 import sys
@@ -145,6 +146,7 @@ from fluxos.extrair_contatos import (
     registrar_se_extraido,
 )
 from core.saida_contatos import ja_extraido as ja_extraido_contato
+from core.saida_financeiro import LinhaFinanceiro
 
 
 def _voltar_pra_busca(page):
@@ -408,7 +410,7 @@ def main():
                 cnj_efetivo = caso.cnj
                 try:
                     if not buscar_civ_exato(page, civ):
-                        msg = "Falha ao buscar CIV"
+                        msg = "FALHA_BUSCA | etapa=busca_civ | CIV nao localizada apos a tentativa de busca."
                         if rodar_mensagem:
                             resultados.append(_erro(FLUXO_MENSAGEM, caso, msg))
                         if rodar_downloads:
@@ -416,7 +418,7 @@ def main():
                     else:
                         nome = clicar_cliente_e_capturar_nome(page, timeout_seg=15)
                         if not nome:
-                            msg = "Cliente nao encontrado na lista de resultados"
+                            msg = "FALHA_BUSCA | etapa=resultado_busca | nenhum cliente foi localizado apos a busca."
                             if rodar_mensagem:
                                 resultados.append(_erro(FLUXO_MENSAGEM, caso, msg))
                             if rodar_downloads:
@@ -426,7 +428,7 @@ def main():
                             # cnj pode vir vazio (processo antigo / numero fora do
                             # padrao CNJ). Aceita: usa cnj da planilha como fallback.
                             if not ok_proc:
-                                msg = "Falha ao abrir processo (clique em PROCESSO falhou)"
+                                msg = "FALHA_BUSCA | etapa=abrir_processo | falha ao abrir o processo do cliente."
                                 if rodar_mensagem:
                                     resultados.append(_erro(FLUXO_MENSAGEM, caso, msg))
                                 if rodar_downloads:
@@ -439,7 +441,7 @@ def main():
                                           f"!= capturado '{nome}'. Usando o capturado.")
                                 pre_ok = True
                 except Exception as exc:
-                    msg = f"Excecao na navegacao: {type(exc).__name__}: {exc}"
+                    msg = f"FALHA_BUSCA | etapa=navegacao | {type(exc).__name__}: {exc}"
                     if rodar_mensagem:
                         resultados.append(_erro(FLUXO_MENSAGEM, caso, msg))
                     if rodar_downloads:
@@ -455,6 +457,11 @@ def main():
                         novos = resultados[-1:]
                     for r in novos:
                         registrar(CONTROLE_XLSX, r)
+                        if rodar_mensagem and r.fluxo == FLUXO_MENSAGEM:
+                            registrar_se_ok(LinhaFinanceiro(
+                                civ=r.civ, cliente=r.cliente, cnj=r.cnj, estado=r.estado,
+                                capturado_em=r.timestamp, status="FALHA_BUSCA", motivo=r.mensagem,
+                            ), saida_mensagens_atual)
                         print(f"  status[{r.fluxo}]: {r.status} — {r.mensagem}")
                     if idx < len(casos):
                         _voltar_pra_busca(page)
@@ -472,10 +479,12 @@ def main():
                         )
                         registrar_se_ok(linha_msg, saida_mensagens_atual)
                     except Exception as exc:
-                        resultado_msg = _erro(
-                            FLUXO_MENSAGEM, caso,
-                            f"Excecao no fluxo: {type(exc).__name__}: {exc}",
-                        )
+                        motivo = f"FALHA_LEITURA | etapa=fluxo_financeiro | {type(exc).__name__}: {exc}"
+                        resultado_msg = _erro(FLUXO_MENSAGEM, caso, motivo)
+                        registrar_se_ok(LinhaFinanceiro(
+                            civ=civ, cliente=cliente_efetivo, cnj=cnj_efetivo, estado="",
+                            capturado_em=resultado_msg.timestamp, status="FALHA_LEITURA", motivo=motivo,
+                        ), saida_mensagens_atual)
                     print(f"  status[{FLUXO_MENSAGEM}]: {resultado_msg.status} — {resultado_msg.mensagem}")
                     resultados.append(resultado_msg)
                     registrar(CONTROLE_XLSX, resultado_msg)
@@ -505,6 +514,31 @@ def main():
                     pausa = random.uniform(2.0, 3.0)
                     print(f"  ...pausando {pausa:.1f}s antes do proximo")
                     time.sleep(pausa)
+
+            # ============================================================
+            # CONFERENCIA: uma linha financeira para cada CIV da entrada.
+            # ============================================================
+            if rodar_mensagem:
+                processados_fin = Counter(r.civ for r in resultados if r.fluxo == FLUXO_MENSAGEM)
+                for caso_pendente in casos:
+                    if processados_fin[caso_pendente.civ] > 0:
+                        processados_fin[caso_pendente.civ] -= 1
+                        continue
+                    motivo = "FALHA_BUSCA | etapa=lote | lote interrompido antes do processamento desta CIV."
+                    pendente = _erro(FLUXO_MENSAGEM, caso_pendente, motivo)
+                    resultados.append(pendente)
+                    registrar(CONTROLE_XLSX, pendente)
+                    registrar_se_ok(LinhaFinanceiro(
+                        civ=caso_pendente.civ, cliente=caso_pendente.cliente,
+                        cnj=caso_pendente.cnj, estado=caso_pendente.uf,
+                        capturado_em=pendente.timestamp, status="FALHA_BUSCA", motivo=motivo,
+                    ), saida_mensagens_atual)
+                    processados_fin[caso_pendente.civ] += 1
+                total_fin_entrada = len(casos)
+                total_fin_resultados = sum(1 for r in resultados if r.fluxo == FLUXO_MENSAGEM)
+                print(f"Conferencia Financeiro: entrada={total_fin_entrada}, resultados={total_fin_resultados}")
+                if total_fin_resultados != total_fin_entrada:
+                    print("ALERTA: divergencia entre CIVs da entrada e resultados financeiros!")
 
             # ============================================================
             # RESUMO + RELATORIO

@@ -64,23 +64,36 @@ def processar_captura(
             fluxo=NOME_FLUXO, status=status, mensagem=msg,
             timestamp=timestamp,
         )
+        if linha is None:
+            etapa = "JA_CAPTURADO" if status == STATUS_JA_FECHADO else ("FALHA_LEITURA" if "leitura" in msg.lower() or "campo" in msg.lower() or "formato" in msg.lower() else "ABA_SEM_DADOS")
+            linha = LinhaFinanceiro(civ=civ, cliente=cliente, cnj=cnj, estado=estado,
+                                    campos={}, capturado_em=timestamp, status=etapa, motivo=msg)
         return (rl, linha)
 
-    # Idempotencia cross-arquivos (financeiro_*.xlsx da pasta saida/).
-    if not forcar and ja_capturado_em_pasta(SAIDA_DIR, civ):
-        return _resultado(STATUS_JA_FECHADO, "Ja capturado em execucao anterior")
+    # Reaproveita somente captura anterior com campos financeiros validos.
+    if not forcar:
+        anterior = ja_capturado_em_pasta(SAIDA_DIR, civ)
+        if anterior:
+            campos_antigos, arquivo_origem = anterior
+            linha = LinhaFinanceiro(civ=civ, cliente=cliente, cnj=cnj, estado=estado,
+                                    campos=campos_antigos, capturado_em=timestamp,
+                                    status="JA_CAPTURADO", motivo="Dados financeiros reaproveitados de captura valida.",
+                                    arquivo_origem=arquivo_origem)
+            return _resultado(STATUS_JA_FECHADO, f"Captura valida reaproveitada de {arquivo_origem}", linha)
 
     # Extrai TODOS os campos do lancamento de pagamento mais recente.
     campos = capturar_financeiro(page, civ)
-    if not campos:
-        return _resultado(
-            STATUS_ERRO,
-            "Aba Financeiro sem lancamento de pagamento (ou nao extraido)",
-        )
+    if not campos or campos.get("_status"):
+        diagnostico = campos or {}
+        codigo = diagnostico.get("_status", "ABA_SEM_DADOS")
+        motivo = diagnostico.get("_motivo", "Aba Financeiro sem lancamento de pagamento.")
+        linha = LinhaFinanceiro(civ=civ, cliente=cliente, cnj=cnj, estado=estado,
+                                capturado_em=timestamp, status=codigo, motivo=motivo)
+        return _resultado(STATUS_ERRO, f"{codigo}: {motivo}", linha)
 
     linha = LinhaFinanceiro(
         civ=civ, cliente=cliente, cnj=cnj, estado=estado,
-        campos=campos, capturado_em=timestamp,
+        campos=campos, capturado_em=timestamp, status="OK",
     )
     dp = campos.get("data_pagamento") or "-"
     val = campos.get("valor") or "-"
@@ -102,7 +115,7 @@ def registrar_se_ok(linha_financeiro, saida_path=None):
     saida_path: path da planilha da RODADA ATUAL (com timestamp). Se None,
     cria um novo com get_saida_financeiro_atual().
     """
+    destino = saida_path if saida_path is not None else get_saida_financeiro_atual()
     if linha_financeiro is None:
         return
-    destino = saida_path if saida_path is not None else get_saida_financeiro_atual()
     registrar_financeiro(destino, linha_financeiro)

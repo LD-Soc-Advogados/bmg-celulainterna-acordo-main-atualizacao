@@ -32,7 +32,7 @@ from playwright.sync_api import Page, TimeoutError as PlaywrightTimeout
 from .frames import _frame_fichas
 
 
-TIMEOUT_ABA_MS = 8_000
+TIMEOUT_ABA_MS = 12_000
 # Teto de espera pro painel estabilizar. Dobrado de 10s pra 20s (09/2026):
 # o polling ja sai MAIS CEDO assim que o texto para de mudar (ver
 # ESTABILIZACAO_POLLS abaixo), entao esse teto so pesa no caso lento -
@@ -380,7 +380,7 @@ def extrair_financeiro(page: Page, civ: str = "") -> dict:
             url_curta = url[-70:] if len(url) > 70 else url
             snip = (txt[:120].replace("\n", " | ") + "...") if len(txt) > 120 else txt.replace("\n", " | ")
             print(f"      frame='{nome}' url=...{url_curta} text={snip!r}")
-        return {}
+        return {"_status": "ABA_SEM_DADOS", "_motivo": f"Conteudo financeiro ausente apos {tentativas} leituras e {TIMEOUT_RENDER_MS}ms; aba possivelmente nao carregou."}
 
     texto = melhor_texto
     blocos = _split_lancamentos(texto)
@@ -389,7 +389,7 @@ def extrair_financeiro(page: Page, civ: str = "") -> dict:
     lancamentos = [l for l in lancamentos if any(l.values())]
     if not lancamentos:
         print(f"  [{civ}] aba Financeiro: painel encontrado mas nenhum campo parseado")
-        return {}
+        return {"_status": "FALHA_LEITURA", "_motivo": "Painel Financeiro carregou, mas nenhum lancamento foi reconhecido; possivel alteracao no formato dos campos."}
 
     lancamentos.sort(key=lambda l: _chave_data(l.get("data_pagamento", "")), reverse=True)
 
@@ -397,11 +397,27 @@ def extrair_financeiro(page: Page, civ: str = "") -> dict:
         print(f"  [{civ}] aba Financeiro: {len(lancamentos)} lancamentos; "
               f"mais recente e de data {lancamentos[0].get('data_pagamento') or '(sem data)'}")
 
-    return _escolher_lancamento(lancamentos, civ)
+    escolhido = _escolher_lancamento(lancamentos, civ)
+    if not escolhido.get("cod_lancto") or not any(escolhido.get(k) for k in ("tipo_lancto", "data_pagamento", "valor")):
+        return {"_status": "FALHA_LEITURA", "_motivo": "Lancamento reconhecido sem os campos financeiros minimos (codigo, tipo, data ou valor)."}
+    return escolhido
 
 
 def capturar_financeiro(page: Page, civ: str = "") -> dict:
-    """abre + extrai. Retorna dict de campos ou {} se falhar. Nao levanta."""
-    if not abrir_aba_financeiro(page, civ):
-        return {}
-    return extrair_financeiro(page, civ)
+    """Abre e le a aba com ate duas tentativas, distinguindo diagnosticos."""
+    ultimo = {"_status": "ABA_SEM_DADOS", "_motivo": "Aba Financeiro nao abriu."}
+    diagnosticos = []
+    for tentativa in range(1, 3):
+        if abrir_aba_financeiro(page, civ):
+            resultado = extrair_financeiro(page, civ)
+            if resultado and not resultado.get("_status"):
+                return resultado
+            ultimo = resultado or {"_status": "ABA_SEM_DADOS", "_motivo": "Aba Financeiro sem conteudo."}
+        else:
+            ultimo = {"_status": "ABA_SEM_DADOS", "_motivo": "Falha ao abrir a aba Financeiro (seletor, timeout ou frame indisponivel)."}
+        diagnosticos.append(f"tentativa {tentativa}: {ultimo.get('_status')} - {ultimo.get('_motivo')}")
+        print(f"  [{civ}] captura Financeiro {diagnosticos[-1]}")
+        if tentativa < 2:
+            time.sleep(2 * tentativa)
+    ultimo["_motivo"] = " | ".join(diagnosticos) or ultimo.get("_motivo", "")
+    return ultimo
